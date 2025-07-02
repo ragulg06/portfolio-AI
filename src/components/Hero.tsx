@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, Sparkles, Code, Zap } from 'lucide-react';
 
 const Hero = () => {
   const [displayText, setDisplayText] = useState('');
@@ -42,56 +42,83 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-purple-900">
-      {/* Animated Background */}
+    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-black">
+      {/* Enhanced Background Elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-green-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        {/* Gradient overlays */}
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-900/10 via-purple-900/10 to-emerald-900/10"></div>
+        
+        {/* Animated orbs */}
+        <div className="absolute top-1/4 left-1/6 w-64 h-64 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/6 w-80 h-80 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-emerald-500/15 to-teal-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        
+        {/* Floating particles */}
+        <div className="absolute inset-0">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white/20 rounded-full animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${2 + Math.random() * 2}s`
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       <div className="container mx-auto px-6 text-center relative z-10">
-        <div className="mb-8">
-          <div className="w-48 h-48 mx-auto mb-8 relative">
-            <div className="w-full h-full rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-green-400 p-1 animate-spin-slow">
-              <div className="w-full h-full rounded-full bg-gray-900 flex items-center justify-center">
-                <div className="w-40 h-40 rounded-full bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center text-6xl font-bold text-cyan-400">
-                  AI
-                </div>
-              </div>
-            </div>
+        {/* Tech Icons */}
+        <div className="flex justify-center space-x-8 mb-12 opacity-70">
+          <div className="p-3 bg-blue-500/10 backdrop-blur-sm rounded-full border border-blue-500/20">
+            <Code className="w-8 h-8 text-blue-400" />
+          </div>
+          <div className="p-3 bg-purple-500/10 backdrop-blur-sm rounded-full border border-purple-500/20">
+            <Sparkles className="w-8 h-8 text-purple-400" />
+          </div>
+          <div className="p-3 bg-emerald-500/10 backdrop-blur-sm rounded-full border border-emerald-500/20">
+            <Zap className="w-8 h-8 text-emerald-400" />
           </div>
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-cyan-200 to-purple-300 bg-clip-text text-transparent">
-          Hello, I'm an <br />
-          <span className="text-cyan-400">{displayText}</span>
-          <span className="animate-pulse text-purple-400">|</span>
+        <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
+          <span className="block text-white mb-4">Hello, I'm</span>
+          <span className="block bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent">
+            {displayText}
+          </span>
+          <span className="animate-pulse text-white/60">|</span>
         </h1>
 
-        <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-          Building tomorrow's AI solutions with cutting-edge machine learning, 
-          deep learning, and a passion for innovation that serves humanity.
+        <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed font-light">
+          Crafting intelligent systems that push the boundaries of what's possible. 
+          <br />
+          <span className="text-blue-400">Building tomorrow's AI solutions</span> with passion and precision.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
           <button 
             onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-            className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full text-white font-semibold hover:from-cyan-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-cyan-500/25"
+            className="group px-10 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 relative overflow-hidden"
           >
-            View My Projects
+            <span className="relative z-10">Explore My Work</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
           </button>
-          <button className="px-8 py-4 border-2 border-cyan-400 text-cyan-400 rounded-full font-semibold hover:bg-cyan-400 hover:text-gray-900 transition-all duration-300 transform hover:scale-105">
-            Download Resume
+          
+          <button className="group px-10 py-4 border-2 border-emerald-400 text-emerald-400 rounded-full font-semibold text-lg hover:bg-emerald-400 hover:text-black transition-all duration-300 transform hover:scale-105 relative overflow-hidden">
+            <span className="relative z-10">Download Resume</span>
+            <div className="absolute inset-0 bg-emerald-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
           </button>
         </div>
 
         <div className="animate-bounce">
           <button 
             onClick={scrollToNext}
-            className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
+            className="text-gray-500 hover:text-blue-400 transition-colors duration-300 group"
           >
-            <ArrowDown size={32} />
+            <ArrowDown size={40} className="group-hover:transform group-hover:translate-y-1 transition-transform duration-300" />
           </button>
         </div>
       </div>
