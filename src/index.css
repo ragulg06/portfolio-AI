@@ -129,3 +129,216 @@ All colors MUST be HSL.
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
+
+/* Horizon Hero Section Styles */
+.hero-container {
+  position: relative;
+  width: 100vw;
+  height: 300vh; /* Extended height for scrolling */
+  overflow: hidden;
+  background: #000000;
+}
+
+.hero-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.side-menu {
+  position: fixed;
+  top: 50%;
+  left: 40px;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.menu-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.menu-icon span {
+  width: 25px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.menu-icon:hover span {
+  background: #00ffff;
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+}
+
+.hero-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 50;
+  text-align: center;
+  pointer-events: none;
+}
+
+.hero-title {
+  font-size: clamp(4rem, 12vw, 12rem);
+  font-weight: 900;
+  line-height: 0.8;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff, #00ffff, #ff00ff);
+  background-size: 300% 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 8s ease infinite;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+}
+
+.hero-subtitle {
+  margin-top: 2rem;
+  max-width: 600px;
+}
+
+.subtitle-line {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0.5rem 0;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+}
+
+.scroll-progress {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.scroll-text {
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.progress-track {
+  width: 2px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.2);
+  position: relative;
+  border-radius: 1px;
+}
+
+.progress-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to top, #00ffff, #ff00ff);
+  border-radius: 1px;
+  transition: height 0.3s ease;
+}
+
+.section-counter {
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 1px;
+  font-family: 'Courier New', monospace;
+}
+
+.scroll-sections {
+  position: relative;
+  z-index: 10;
+  padding-top: 100vh;
+}
+
+.content-section {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 2rem;
+}
+
+.content-section .hero-title {
+  font-size: clamp(3rem, 8vw, 8rem);
+  margin-bottom: 2rem;
+}
+
+.content-section .hero-subtitle {
+  max-width: 800px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .side-menu {
+    left: 20px;
+  }
+  
+  .scroll-progress {
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .hero-title {
+    font-size: clamp(3rem, 15vw, 8rem);
+  }
+  
+  .subtitle-line {
+    font-size: clamp(0.9rem, 4vw, 1.2rem);
+  }
+  
+  .content-section {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: clamp(2.5rem, 18vw, 6rem);
+  }
+  
+  .subtitle-line {
+    font-size: clamp(0.8rem, 5vw, 1rem);
+  }
+  
+  .side-menu {
+    left: 15px;
+  }
+  
+  .scroll-progress {
+    bottom: 15px;
+    right: 15px;
+    scale: 0.8;
+  }
+}
