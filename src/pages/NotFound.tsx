@@ -1,4 +1,3 @@
-
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -13,7 +12,8 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white relative">
+    <div className="min-h-screen flex items-center justify-center text-white relative">
+      {/* Background effects are now inherited from App.tsx */}
       <div className="text-center relative z-10">
         <h1 className="text-6xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent">404</h1>
         <p className="text-2xl text-gray-300 mb-8">Oops! Page not found</p>
