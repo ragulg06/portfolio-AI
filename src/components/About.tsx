@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { Star, Heart, Target, Award } from 'lucide-react';
 
 const About = () => {
   return (
-    <section id="about" className="py-20 bg-gray-900 relative overflow-hidden">
+    <section id="about" className="py-20 bg-black relative overflow-hidden">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
