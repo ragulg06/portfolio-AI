@@ -15,14 +15,15 @@ export const Component = () => {
   const subtitleRef = useRef<HTMLDivElement>(null);
   const scrollProgressRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const heroContentRef = useRef<HTMLDivElement>(null);
 
   const smoothCameraPos = useRef({ x: 0, y: 30, z: 100 });
   const cameraVelocity = useRef({ x: 0, y: 0, z: 0 });
   
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [currentSection, setCurrentSection] = useState(1);
+  const [currentSection, setCurrentSection] = useState(0);
   const [isReady, setIsReady] = useState(false);
-  const totalSections = 2;
+  const totalSections = 3;
   
   const threeRefs = useRef<{
     scene: THREE.Scene | null;
@@ -503,7 +504,7 @@ export const Component = () => {
     };
   }, [isReady]);
 
-  // Scroll handling
+  // Scroll handling with text movement
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -524,9 +525,9 @@ export const Component = () => {
       
       // Define camera positions for each section
       const cameraPositions = [
-        { x: 0, y: 30, z: 300 },    // Section 0 - HORIZON
-        { x: 0, y: 40, z: -50 },     // Section 1 - COSMOS
-        { x: 0, y: 50, z: -700 }       // Section 2 - INFINITY
+        { x: 0, y: 30, z: 300 },    // Section 0 - AI ENGINEER
+        { x: 0, y: 40, z: -50 },     // Section 1 - MACHINE LEARNING
+        { x: 0, y: 50, z: -700 }       // Section 2 - DEEP LEARNING
       ];
       
       // Get current and next positions
@@ -538,6 +539,35 @@ export const Component = () => {
       refs.targetCameraY = currentPos.y + (nextPos.y - currentPos.y) * sectionProgress;
       refs.targetCameraZ = currentPos.z + (nextPos.z - currentPos.z) * sectionProgress;
       
+      // Animate hero content based on scroll
+      if (heroContentRef.current) {
+        const scrollFactor = Math.min(scrollY / windowHeight, 2);
+        
+        // Move text up and fade based on scroll
+        gsap.to(heroContentRef.current, {
+          y: -scrollY * 0.5, // Move up at half scroll speed
+          opacity: Math.max(0, 1 - scrollFactor * 0.5), // Fade out gradually
+          duration: 0.1,
+          ease: "none"
+        });
+        
+        // Change text color based on scroll progress and 3D scene
+        const hue = 180 + (progress * 120); // Shift from cyan to purple
+        const saturation = 70 + (progress * 30); // Increase saturation
+        const lightness = 60 + (Math.sin(progress * Math.PI * 2) * 20); // Pulse lightness
+        
+        if (titleRef.current) {
+          titleRef.current.style.background = `linear-gradient(135deg, 
+            hsl(${hue}, ${saturation}%, ${lightness}%), 
+            hsl(${hue + 60}, ${saturation + 20}%, ${lightness + 10}%), 
+            hsl(${hue + 120}, ${saturation}%, ${lightness - 10}%))`;
+          titleRef.current.style.backgroundSize = '300% 300%';
+          titleRef.current.style.backgroundClip = 'text';
+          titleRef.current.style.webkitBackgroundClip = 'text';
+          titleRef.current.style.webkitTextFillColor = 'transparent';
+        }
+      }
+      
       // Smooth parallax for mountains
       refs.mountains.forEach((mountain, i) => {
         const speed = 1 + i * 0.9;
@@ -548,7 +578,6 @@ export const Component = () => {
         
         // Use the same smoothing approach
         mountain.userData.targetZ = targetZ;
-        const location = mountain.position.z;
         if (progress > 0.7) {
           mountain.position.z = 600000;
         }
@@ -567,6 +596,32 @@ export const Component = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [totalSections]);
 
+  // Get current section title and subtitle
+  const getCurrentContent = () => {
+    const titles = ['AI ENGINEER', 'MACHINE LEARNING', 'DEEP LEARNING'];
+    const subtitles = [
+      {
+        line1: 'Building intelligent systems that shape tomorrow,',
+        line2: 'where innovation meets artificial intelligence'
+      },
+      {
+        line1: 'Crafting algorithms that learn and adapt,',
+        line2: 'transforming data into intelligent insights'
+      },
+      {
+        line1: 'Neural networks that think beyond boundaries,',
+        line2: 'creating the future of artificial intelligence'
+      }
+    ];
+    
+    return {
+      title: titles[currentSection] || titles[0],
+      subtitle: subtitles[currentSection] || subtitles[0]
+    };
+  };
+
+  const currentContent = getCurrentContent();
+
   return (
     <div ref={containerRef} className="hero-container cosmos-style">
       <canvas ref={canvasRef} className="hero-canvas" />
@@ -578,21 +633,21 @@ export const Component = () => {
           <span></span>
           <span></span>
         </div>
-        <div className="vertical-text">SPACE</div>
+        <div className="vertical-text">AI</div>
       </div>
 
-      {/* Main content */}
-      <div className="hero-content cosmos-content">
-        <h1 ref={titleRef} className="hero-title">
-          AI ENGINEER
+      {/* Main content - now moves with scroll */}
+      <div ref={heroContentRef} className="hero-content cosmos-content">
+        <h1 ref={titleRef} className="hero-title dynamic-title">
+          {currentContent.title}
         </h1>
         
         <div ref={subtitleRef} className="hero-subtitle cosmos-subtitle">
           <p className="subtitle-line">
-            Building intelligent systems that shape tomorrow,
+            {currentContent.subtitle.line1}
           </p>
           <p className="subtitle-line">
-            where innovation meets artificial intelligence
+            {currentContent.subtitle.line2}
           </p>
         </div>
       </div>
@@ -603,55 +658,21 @@ export const Component = () => {
         <div className="progress-track">
           <div 
             className="progress-fill" 
-            style={{ width: `${scrollProgress * 100}%` }}
+            style={{ height: `${scrollProgress * 100}%` }}
           />
         </div>
         <div className="section-counter">
-          {String(currentSection).padStart(2, '0')} / {String(totalSections).padStart(2, '0')}
+          {String(currentSection + 1).padStart(2, '0')} / {String(totalSections).padStart(2, '0')}
         </div>
       </div>
 
       {/* Additional sections for scrolling */}
       <div className="scroll-sections">
-       {[...Array(2)].map((_, i) => {
-          const titles = {
-            0: 'AI ENGINEER',
-            1: 'MACHINE LEARNING',
-            2: 'DEEP LEARNING'
-          };
-          
-          const subtitles = {
-            0: {
-              line1: 'Building intelligent systems that shape tomorrow,',
-              line2: 'where innovation meets artificial intelligence'
-            },
-            1: {
-              line1: 'Crafting algorithms that learn and adapt,',
-              line2: 'transforming data into intelligent insights'
-            },
-            2: {
-              line1: 'Neural networks that think beyond boundaries,',
-              line2: 'creating the future of artificial intelligence'
-            }
-          };
-          
-          return (
-            <section key={i} className="content-section">
-              <h1 className="hero-title">
-                {titles[i+1 as keyof typeof titles] || 'AI ENGINEER'}
-              </h1>
-          
-              <div className="hero-subtitle cosmos-subtitle">
-                <p className="subtitle-line">
-                  {subtitles[i+1 as keyof typeof subtitles]?.line1}
-                </p>
-                <p className="subtitle-line">
-                  {subtitles[i+1 as keyof typeof subtitles]?.line2}
-                </p>
-              </div>
-            </section>
-          );
-        })}
+        {[...Array(totalSections)].map((_, i) => (
+          <section key={i} className="content-section">
+            {/* Content is now handled by the main hero-content div */}
+          </section>
+        ))}
       </div>
     </div>
   );
