@@ -22,7 +22,7 @@ export const Component = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentSection, setCurrentSection] = useState(0);
   const [isReady, setIsReady] = useState(false);
-  const totalSections = 3;
+  const totalSections = 2;
   
   const threeRefs = useRef<{
     scene: THREE.Scene | null;
@@ -524,9 +524,9 @@ export const Component = () => {
       
       // Define camera positions for each section
       const cameraPositions = [
-        { x: 0, y: 30, z: 300 },    // Section 0 - AI ENGINEER
-        { x: 0, y: 40, z: -50 },     // Section 1 - MACHINE LEARNING
-        { x: 0, y: 50, z: -700 }       // Section 2 - DEEP LEARNING
+        { x: 0, y: 30, z: 300 },    // Section 0
+        { x: 0, y: 40, z: -50 },     // Section 1
+        { x: 0, y: 50, z: -700 }       // Section 2
       ];
       
       // Get current and next positions
@@ -567,37 +567,6 @@ export const Component = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [totalSections]);
 
-  // Get current section content
-  const getCurrentSectionContent = () => {
-    const sections = [
-      {
-        title: 'AI ENGINEER',
-        subtitle: {
-          line1: 'Building intelligent systems that shape tomorrow,',
-          line2: 'where innovation meets artificial intelligence'
-        }
-      },
-      {
-        title: 'MACHINE LEARNING',
-        subtitle: {
-          line1: 'Crafting algorithms that learn and adapt,',
-          line2: 'transforming data into intelligent insights'
-        }
-      },
-      {
-        title: 'DEEP LEARNING',
-        subtitle: {
-          line1: 'Neural networks that think beyond boundaries,',
-          line2: 'creating the future of artificial intelligence'
-        }
-      }
-    ];
-
-    return sections[currentSection] || sections[0];
-  };
-
-  const currentContent = getCurrentSectionContent();
-
   return (
     <div ref={containerRef} className="hero-container cosmos-style">
       <canvas ref={canvasRef} className="hero-canvas" />
@@ -612,18 +581,18 @@ export const Component = () => {
         <div className="vertical-text">SPACE</div>
       </div>
 
-      {/* Main content - Now dynamically updates based on scroll */}
+      {/* Main content - Static AI ENGINEER text */}
       <div className="hero-content cosmos-content">
         <h1 ref={titleRef} className="hero-title">
-          {currentContent.title}
+          AI ENGINEER
         </h1>
         
         <div ref={subtitleRef} className="hero-subtitle cosmos-subtitle">
           <p className="subtitle-line">
-            {currentContent.subtitle.line1}
+            Building intelligent systems that shape tomorrow,
           </p>
           <p className="subtitle-line">
-            {currentContent.subtitle.line2}
+            where innovation meets artificial intelligence
           </p>
         </div>
       </div>
@@ -638,46 +607,28 @@ export const Component = () => {
           />
         </div>
         <div className="section-counter">
-          {String(currentSection).padStart(2, '0')} / {String(totalSections - 1).padStart(2, '0')}
+          {String(currentSection).padStart(2, '0')} / {String(totalSections).padStart(2, '0')}
         </div>
       </div>
 
       {/* Additional sections for scrolling */}
       <div className="scroll-sections">
-       {[...Array(2)].map((_, i) => {
-          const titles = {
-            0: 'MACHINE LEARNING',
-            1: 'DEEP LEARNING'
-          };
-          
-          const subtitles = {
-            0: {
-              line1: 'Crafting algorithms that learn and adapt,',
-              line2: 'transforming data into intelligent insights'
-            },
-            1: {
-              line1: 'Neural networks that think beyond boundaries,',
-              line2: 'creating the future of artificial intelligence'
-            }
-          };
-          
-          return (
-            <section key={i} className="content-section">
-              <h1 className="hero-title">
-                {titles[i as keyof typeof titles] || 'AI ENGINEER'}
-              </h1>
-          
-              <div className="hero-subtitle cosmos-subtitle">
-                <p className="subtitle-line">
-                  {subtitles[i as keyof typeof subtitles]?.line1}
-                </p>
-                <p className="subtitle-line">
-                  {subtitles[i as keyof typeof subtitles]?.line2}
-                </p>
-              </div>
-            </section>
-          );
-        })}
+       {[...Array(2)].map((_, i) => (
+          <section key={i} className="content-section">
+            <h1 className="hero-title">
+              AI ENGINEER
+            </h1>
+        
+            <div className="hero-subtitle cosmos-subtitle">
+              <p className="subtitle-line">
+                Building intelligent systems that shape tomorrow,
+              </p>
+              <p className="subtitle-line">
+                where innovation meets artificial intelligence
+              </p>
+            </div>
+          </section>
+        ))}
       </div>
     </div>
   );
