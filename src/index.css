@@ -197,6 +197,7 @@ All colors MUST be HSL.
   z-index: 50;
   text-align: center;
   pointer-events: none;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero-title {
@@ -213,11 +214,13 @@ All colors MUST be HSL.
   letter-spacing: -0.02em;
   text-transform: uppercase;
   font-family: 'Inter', sans-serif;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero-subtitle {
   margin-top: 2rem;
   max-width: 600px;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .subtitle-line {
@@ -227,6 +230,7 @@ All colors MUST be HSL.
   margin: 0.5rem 0;
   line-height: 1.4;
   letter-spacing: 0.5px;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .scroll-progress {
@@ -288,6 +292,8 @@ All colors MUST be HSL.
   align-items: center;
   text-align: center;
   padding: 0 2rem;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .content-section .hero-title {
